@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aayush Grocery Shop</title>
+<style>
+  body {margin:0; font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif; background:#1877f2; color:#fff; display:flex; flex-direction:column; min-height:100vh;}
+  header {background:#145dbf; padding:20px 0; text-align:center; font-weight:bold; font-size:28px; letter-spacing:2px; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+  nav ul {list-style:none; padding:10px 0; margin:0; display:flex; justify-content:center; gap:30px; background:#145dbf;}
+  nav ul li a {color:#fff; text-decoration:none; font-weight:600; font-size:18px; cursor:pointer;}
+  nav ul li a:hover {text-decoration:underline;}
+  main {flex-grow:1; display:flex; flex-direction:column; align-items:center; padding:40px 20px; gap:40px;}
+  .login-form, .products, .contact-info {
+    max-width:400px; width:100%; border-radius:8px; box-shadow:0 4px 12px rgb(0 0 0 / 0.15); padding:30px 40px; box-sizing:border-box;
+  }
+  .login-form {background:#fff; color:#1c1e21;}
+  .login-form h2 {color:#1877f2; font-weight:700; margin-bottom:25px; text-align:center;}
+  .login-form label {display:block; margin-bottom:6px; font-weight:600;}
+  .login-form input[type=email], .login-form input[type=password] {
+    width:100%; padding:12px 10px; margin-bottom:20px; border:1px solid #dddfe2; border-radius:6px; font-size:16px; transition:border-color 0.3s;
+  }
+  .login-form input:focus {outline:none; border-color:#1877f2;}
+  .login-form button {
+    width:100%; background:#1877f2; border:none; padding:12px; border-radius:6px; color:#fff; font-size:18px; font-weight:700; cursor:pointer; transition:background-color 0.3s;
+  }
+  .login-form button:hover {background:#145dbf;}
+  .products {background:#fff; color:#1c1e21; max-width:900px; display:none; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:25px; display:grid; padding:20px;}
+  .product-card {background:#fff; color:#1c1e21; border-radius:10px; box-shadow:0 4px 12px rgb(0 0 0 / 0.1); padding:20px; text-align:center; cursor:pointer; transition:transform 0.3s ease;}
+  .product-card:hover {transform:scale(1.05);}
+  .product-image {width:100%; max-height:140px; object-fit:contain; margin-bottom:15px;}
+  .product-name {font-weight:700; margin-bottom:10px; font-size:18px;}
+  .product-price {color:#1877f2; font-size:16px; font-weight:600;}
+  .contact-info {background:#fff; color:#1c1e21; display:none; font-size:18px; font-weight:600; text-align:center; padding:25px 30px;}
+  .contact-info h3 {color:#1877f2; margin-bottom:15px; font-weight:700;}
+  .contact-info p {margin:8px 0;}
+</style>
+</head>
+<body>
+<header>
+  AAYUSH GROCERY SHOP
+  <nav>
+    <ul>
+      <li><a id="homeBtn">Home</a></li>
+      <li><a id="productsBtn">Products</a></li>
+      <li><a id="contactBtn">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <form class="login-form" id="loginForm" onsubmit="return handleLogin(event)">
+    <h2>Login to Your Account</h2>
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="Enter your email" required />
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Enter your password" required />
+    <button type="submit">Log In</button>
+  </form>
+  <section class="products" id="productsSection">
+    <div class="product-card">
+      <img src="khukuri.webp" alt="cigrate" class="product-image" />
+      <div class="product-name">cigrate</div>
+      <div class="product-price">130 rs / pkt </div>
+    </div>
+    <div class="product-card">
+      <img src="rumpoom.jfif" alt="rumpoom" class="product-image" />
+      <div class="product-name">Organic rumpoom</div>
+      <div class="product-price">50 rs / 1pkt</div>
+    </div>
+   
+    <div class="product-card">
+      <img src="opp.jpg" alt="Eggs" class="product-image" />
+      <div class="product-name">Free-Range Eggs</div>
+      <div class="product-price">$4.50 / dozen</div>
+    </div>
+    <div class="product-card">
+      <img src="uo.jpg" alt="Rice" class="product-image" />
+      <div class="product-name">Basmati Rice</div>
+      <div class="product-price">$12.00 / 5kg</div>
+    </div>
+  </section>
+  <section class="contact-info" id="contactInfo">
+    <h3>Contact Information</h3>
+    <p>Facebook ID: <strong>Aayush Basnet</strong></p>
+    <p>Phone Number: <strong>9824996325</strong></p>
+  </section>
+</main>
+<script>
+  let loggedIn = false;
+  function handleLogin(e) {
+    e.preventDefault();
+    loggedIn = true;
+    showSection('products');
+    return false;
+  }
+  function showSection(s) {
+    const f = document.getElementById('loginForm'),
+          p = document.getElementById('productsSection'),
+          c = document.getElementById('contactInfo');
+    if(s === 'home') { f.style.display='block'; p.style.display='none'; c.style.display='none'; }
+    else if(s === 'products') {
+      if(loggedIn) { f.style.display='none'; p.style.display='grid'; c.style.display='none'; }
+      else { alert('Please login first!'); showSection('home'); }
+    }
+    else if(s === 'contact') { f.style.display='none'; p.style.display='none'; c.style.display='block'; }
+  }
+  document.getElementById('homeBtn').onclick = () => showSection('home');
+  document.getElementById('productsBtn').onclick = () => showSection('products');
+  document.getElementById('contactBtn').onclick = () => showSection('contact');
+  showSection('home');
+</script>
+</body>
+</html>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $product = htmlspecialchars($_POST["product"]);
+    $price = htmlspecialchars($_POST["price"]);
+
+    echo "<h2>Thank you for your purchase!</h2>";
+    echo "<p>You bought: <strong>$product</strong></p>";
+    echo "<p>Price: <strong>\$$price</strong></p>";
+} else {
+    echo "Invalid access.";
+}
+?>
